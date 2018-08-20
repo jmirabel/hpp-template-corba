@@ -87,8 +87,10 @@ namespace hpp
     Server<T>::~Server()
     {
       deactivateAndDestroyServers();
-      orb_->shutdown(0);
-      delete servantId_;
+      // This should be done manually since several server may run
+      // in parallel and it should only be done once.
+      // orb_->shutdown(0);
+      // delete servantId_;
     }
 
     template <class T>
@@ -265,10 +267,11 @@ namespace hpp
     template <class T>
     void Server<T>::deactivateAndDestroyServers()
     {
-      if (servant_) {
-	poa_->deactivate_object(*servantId_);
-	delete servant_;
-      }
+      // This causes a SEGV.
+      // if (servant_) {
+	// poa_->deactivate_object(*servantId_);
+	// delete servant_;
+      // }
     }
 
 
